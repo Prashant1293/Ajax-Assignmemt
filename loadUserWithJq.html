@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" media="screen" title="no title">
+  </head>
+  <script  src="https://code.jquery.com/jquery-3.1.1.min.js"  crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+
+
+  <body style="background-color: coral;">
+
+
+
+
+
+<nav class="navbar navbar-inverse" style="background-color: indigo">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+                <a class="navbar-brand" href="#" style="color:White">Data Tracker</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li ><a href="home.html">Home</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Know More <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="aboutUs.html" target="_parent">About Us</a></li>
+              <li><a href="documentation.html" target="_parent">Documentation</a></li>
+              <li><a href="sites.html" target="_parent">Sites</a></li>
+            </ul>
+          </li>
+          <li><a href="cotactus.html">Contact Us</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#SignUp" data-toggle="collapse" data-parent="#accordion">
+            <span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+          <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+    <div class="container" id="div1">
+      <form class="form form-horizontal " id="formToSerialize" style="border: double; border-color: black">
+        <label class="form-control" for="username">Enter Github Username </label>
+        <input class="form-control" id="userName" name="username" type="text">
+        </form>
+      <button class="form-control btn btn-success" id="get-data">Get User Details</button>
+      </div>
+
+      <br><br>
+
+
+      <div class="container" id="div2">
+      <img  id="user-image" src="" style="border-color: green;border:double; align-items: center;">
+      </div>
+
+      <br> <br>
+
+
+      <div class="container" id ="form-div">
+        
+        <form class="form-horizontal form-responsive" id="form1" style="border:double;border-color:brown">
+        <label for="username" class="form-control">User-Name</label>
+        <input type="text" id="user-name" name="username" class="form-control">
+      <br>
+        <label for="company" class="form-control">Company</label>
+        <input type="text" id="Company" name="company" class="form-control">
+      <br>
+        <label for="email" class="form-control">Email</label>
+        <input type="text" id="Email" name="email" class="form-control">
+      <br>
+        <label for="creation" class="form-control">Created-At</label>
+        <input type="text" id="Creation" name="creation" class="form-control">
+      <br>      
+        <label for="location" class="form-control">Location</label>
+        <input type="text" id="Location" name="location" class="form-control">
+      <br>  
+        <label for="url" class="form-control">Url</label>
+        <input type="text" id="Url" name="url" class="form-control">
+          
+      
+
+
+      </form>
+
+      </div>
+    
+
+
+<script>
+      $(document).ajaxStart(function(){
+        $("#user-image").attr("src","progress.gif");
+      }).ajaxStop(function(){
+        console.log("Ajax Stopped.")
+      }).ajaxSuccess(function(){
+        console.log("Ajax Success")
+      }).ajaxComplete(function(){
+        console.log("Ajax Completed")
+      })
+
+      $("#get-data").on("click",function(){
+        var username = $("#userName").val();
+        console.log(username);
+        $.ajax({
+          url:"https://api.github.com/users/"+username,
+          success: function(data){
+            console.log(data)
+            $("#user-image").attr("src",data.avatar_url);
+            $("#user-name").attr("value",data.name);
+            $("#Company").attr("value",data.company);
+            $("#Email").attr("value",data.email);
+            $("#Creation").attr("value",data.created_at);
+            $("#Location").attr("value",data.location);
+            $("#Url").attr("value",data.html_url);
+
+
+          },
+          error: function(){
+            $("#user-image").attr("src","no-user.png");
+            $("#user-name").text("User not found");
+          }
+        });
+      });
+    </script>
+
+
+    
+  </body>
+</html>
